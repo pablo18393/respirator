@@ -61,7 +61,6 @@ bool read_pressure() {
   if (SerialX_peek() == 'X') {
     SerialX_read();
     Start_capture = 1;
-    resetValues();
   }
   else if ( SerialX_peek() > 47 && SerialX_peek() < 58 ) {
     inputBuffer[ graph_index ] *= 10;

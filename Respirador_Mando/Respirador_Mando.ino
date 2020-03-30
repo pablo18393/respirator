@@ -33,6 +33,7 @@
 
 #define PUSHED digitalRead(pulse)
 #define NOT_PUSHED digitalRead(pulse) == 0
+#define SerialBus Serial
 
 //-------------------//
 
@@ -691,8 +692,10 @@ void intro() {
   }
   start_confirmed = 1;
   CMV = 1;
-  digitalWrite(usb_sel, LOW);
-  Serial1.begin(115200);
+  if (SerialBus == Serial1) {
+    digitalWrite(usb_sel, LOW);
+  }
+  SerialBus.begin(115200);
   menu();
 }
 

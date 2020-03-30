@@ -8,28 +8,42 @@ void graphic() {
   while ((millis() - last_something) > graphicWait) {
     updateData();
     if (read_pressure()) {
-      if (inputBuffer[graphicPos] > (yRes * scale)) {
-        inputBuffer[graphicPos] = yRes * scale;
+      if (Start_capture) {
+        deleteDrawed();
       }
-      erasePixel();
-      //graphicBuffer[graphicPos] = 160 * sin(angle / 6.28) + 160;
-      //angle++;
-      graphicBuffer[graphicPos] = inputBuffer[graphicPos];
-      if (newGraphicData) {
-        drawPixel();
-        if (graphicPos >= graphicX - 1) {
-          graphicPos = 0;
-          drawPeaks();
-          drawPIP();
-          assignDrawedBefore();
+      else {
+        if (inputBuffer[graphicPos] > (yRes * scale)) {
+          inputBuffer[graphicPos] = yRes * scale;
         }
-        else {
-          graphicPos++;
+        erasePixel();
+        //graphicBuffer[graphicPos] = 160 * sin(angle / 6.28) + 160;
+        //angle++;
+        graphicBuffer[graphicPos] = inputBuffer[graphicPos];
+        if (newGraphicData) {
+          drawPixel();
+          if (graphicPos >= graphicX - 1) {
+            graphicPos = 0;
+            drawPeaks();
+            drawPIP();
+            assignDrawedBefore();
+          }
+          else {
+            graphicPos++;
+          }
         }
       }
     }
   }
   menu();
+}
+
+void deleteDrawed() {
+  assignDrawedBefore();
+  for (int i = 0; i < 215; i++) {
+    graphicPos = i;
+    erasePixel();
+  }
+  resetValues();
 }
 
 void drawPeaks() {
@@ -68,7 +82,7 @@ void drawPixel() {
     tft.drawPixel(xOffset + axisWidth + graphicPos + 1, 1 + yOffset - axisWidth - (graphicBuffer[graphicPos]) / scale, WHITE);
     tft.drawPixel(xOffset + axisWidth + graphicPos + 1, 2 + yOffset - axisWidth - (graphicBuffer[graphicPos]) / scale, WHITE);
   */
-  if (graphicPos) {
+  if (graphicPos > 1) {
     tft.drawLine(xOffset + axisWidth + graphicPos + 1, yOffset - axisWidth - (graphicBuffer[graphicPos - 1]) / scale, xOffset + axisWidth + graphicPos + 2, yOffset - axisWidth - (graphicBuffer[graphicPos]) / scale, WHITE);
   }
 }
@@ -80,6 +94,7 @@ void resetValues() {
   }
   graphicPos = 0;
   graph_index = 0;
+  Start_capture = 0;
 }
 
 int checkMaxPeak() {

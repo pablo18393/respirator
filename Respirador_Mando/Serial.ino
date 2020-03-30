@@ -1,37 +1,37 @@
 void SerialX_empty() {
-  while (Serial1.available()) {
-    Serial1.read();
+  while (SerialBus.available()) {
+    SerialBus.read();
   }
 }
 
 byte SerialX_available() {
-  return (Serial1.available());
+  return (SerialBus.available());
 }
 
 char SerialX_peek() {
-  return (Serial1.peek());
+  return (SerialBus.peek());
 }
 
 
 char SerialX_read() {
-  return (Serial1.read());
+  return (SerialBus.read());
 }
 
 void SerialX_print(int payload) {
-  Serial1.print(payload);
+  SerialBus.print(payload);
 }
 
 
 void SerialX_print(long payload) {
-  Serial1.print(payload);
+  SerialBus.print(payload);
 }
 
 
 
 void SerialX_print(char payload) {
-  Serial1.write(payload);
+  SerialBus.write(payload);
 }
 
 void SerialX_print(char* payload) {
-  Serial1.write(payload);
+  SerialBus.write(payload);
 }
