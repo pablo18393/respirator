@@ -13,7 +13,7 @@ void graphic() {
       erasePixel();
       //graphicBuffer[graphicPos] = 160 * sin(angle / 6.28) + 160;
       //angle++;
-      //graphicBuffer[graphicPos] = inputBuffer[graphicPos];
+      graphicBuffer[graphicPos] = inputBuffer[graphicPos];
       if (newGraphicData) {
         drawPixel();
         if (graphicPos >= graphicX - 1) {
