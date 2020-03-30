@@ -4,6 +4,7 @@ void graphic() {
   page = 0;
   drawAxis();
   resetValues();
+  SerialX.
   while ((millis() - last_something) > graphicWait) {
     updateData();
     if (read_pressure()) {
