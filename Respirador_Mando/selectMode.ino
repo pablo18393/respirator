@@ -1,30 +1,6 @@
 void selectMode() {
   end2 = 0;
-  if (!(page == 3 || page == 4 || page == 6)) {
-    if ( !(page == 5 && bar_offset)) {
-      bar_pos = 1;
-    }
-  }
-  else {
-    if (keep_am == 1 && page == 3 ) {
-      bar_pos = 7;
-      eraseBigBar();
-      updateBar();
-    }
-    else if (keep_tl && page == 4) {
-      bar_pos = 8;
-      eraseBigBar();
-      updateBar();
-    }
-    else if (keep_tl && page == 6) {
-      bar_pos = 5;
-      eraseBigBar();
-      updateBar();
-    }
-    else {
-      bar_pos = 2;
-    }
-  }
+  bar_pos = 1;
   selected = 0;
   while (1) {
     ypos = (320 - width_heading) / (2 * rectangles) + (bar_pos - 1) * (320 - width_heading) / (rectangles) + letter_height;
@@ -73,10 +49,10 @@ void selectMode() {
           while (NOT_PUSHED) {
             updateData();
             if (move) {
-              if(CMV==1){
+              if (CMV == 1) {
                 CMV++;
               }
-              else{
+              else {
                 CMV--;
               }
               drawCMVselector(CMV);
@@ -153,6 +129,12 @@ void selectMode() {
               move = 0;
             }
           }
+          else {
+            alarmSettings();
+          }
+          break;
+        case 7:
+          alarmSettings();
           break;
       }
       draw_cursor_unselected();

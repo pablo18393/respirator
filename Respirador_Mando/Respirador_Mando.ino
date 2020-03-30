@@ -46,7 +46,7 @@ int PTrigger = -2, minPTrigger = -5, maxPTrigger = 0;
 
 //-------------------//
 
-int xRes = 215, yRes = 255;
+int xRes = 215, yRes = 221;
 int xOffset = 5, yOffset = 310;
 int xAxis = 220, yAxis = 285;
 int graphicX = xAxis - xOffset;

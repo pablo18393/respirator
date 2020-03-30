@@ -13,7 +13,9 @@ void drawRectangles() {
   for (int i = 2; i <= rectangles; i++) {
     tft.fillRect(0, (320 - width_heading) * (i - 1) / rectangles + width_heading - 1, 240, width_space, COLOR_LINE);
   }
-  tft.fillRect(120 - width_space / 2, width_heading - 1, width_space, (320 - width_heading) / rectangles, COLOR_LINE);
+  if (page == 1 || page == 2) {
+    tft.fillRect(120 - width_space / 2, width_heading - 1, width_space, (320 - width_heading) / rectangles, COLOR_LINE);
+  }
   tft.drawRect(0, 319, width_select, 319, COLOR_MENU);
   bar_offset = 0;
   /*Se rellenan las cuadriculas con texto, valores y simbolos */

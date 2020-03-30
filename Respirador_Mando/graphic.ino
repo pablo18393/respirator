@@ -79,8 +79,6 @@ void resetValues() {
   }
   graphicPos = 0;
   graph_index = 0;
-  maxData = 0;
-  minData = 99;
 }
 
 int checkMaxPeak() {

@@ -1,15 +1,18 @@
 void drawAxis() {
   tft.fillScreen(BLACK);
-  tft.fillRect(0, 0, 320, width_heading, COLOR_HEADING);
-  tft.fillRect(120 - width_space / 2, 0, width_space, width_heading, COLOR_LINE);
+  tft.fillRect(0, 0, 320, 2 * width_heading, COLOR_HEADING);
+  tft.fillRect(0, width_heading, 320, width_space, COLOR_LINE);
+  tft.fillRect(120 - width_space / 2, 0, width_space, 2 * width_heading, COLOR_LINE);
   tft.fillRect(0, yOffset, xAxis, axisWidth, WHITE);
-  tft.fillRect(xOffset, 60, axisWidth, yAxis, WHITE);
+  tft.fillRect(xOffset, 104, axisWidth, yAxis, WHITE);
   tft.setTextColor(WHITE);
   tftdrawStringWrap("t", 228, 295, 4);
-  tftdrawStringWrap("P", 2, 40, 4);
+  tftdrawStringWrap("P", 2, 74, 4);
   tft.setTextColor(BLACK);
-  tftdrawStringWrap("Pmax:", xOffset, 5, 4);
-  tftdrawStringWrap("Pmin:", xOffset + 120 + width_space, 5, 4);
+  tftdrawStringWrap("Pmax:", xOffset, 5, 2);
+  tftdrawStringWrap("Pmin:", xOffset + 120 + width_space, 5, 2);
+  tftdrawStringWrap("Volume:", xOffset, 5 + width_heading, 2);
+  tftdrawStringWrap("Resp/min:", xOffset + 120 + width_space, 5 + width_heading, 2);
   drawPIP();
 }
 
