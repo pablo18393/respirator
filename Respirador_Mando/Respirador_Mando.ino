@@ -33,7 +33,7 @@
 
 #define PUSHED digitalRead(pulse)
 #define NOT_PUSHED digitalRead(pulse) == 0
-#define SerialBus Serial
+#define SerialBus Serial1
 
 //-------------------//
 
