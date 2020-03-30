@@ -5,14 +5,13 @@ void alarmSettings() {
   for (int i = 0; i <= 6; i++) {
     pos_text[i] = 0;
   }
-  pos_text[0] = 1;
+  pos_text[3] = 1;
 
-  words[0]  = "";
-  words[1] = "PIP PRESS";
-  words[2] = "OSC RATE";
-  words[3] = "VOLUME";
-  words[4] = "E/I";
-  words[5] = "";
+  words[0]  = "MAX OSC RATE";
+  words[1] = "MIN VOL";
+  words[2] = "MAX PIP";
+  words[3] = "OK";
+  rectangles = 4;
 
   drawRectangles();
   drawHeading();

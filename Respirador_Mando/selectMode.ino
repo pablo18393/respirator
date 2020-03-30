@@ -43,98 +43,141 @@ void selectMode() {
       while (PUSHED) {
         updateData();
       }
-      switch (bar_pos) {
+      switch (page) {
         case 1:
-          previousCMV = CMV;
-          while (NOT_PUSHED) {
-            updateData();
-            if (move) {
-              if (CMV == 1) {
-                CMV++;
+          switch (bar_pos) {
+            case 1:
+              previousCMV = CMV;
+              while (NOT_PUSHED) {
+                updateData();
+                if (move) {
+                  if (CMV == 1) {
+                    CMV++;
+                  }
+                  else {
+                    CMV--;
+                  }
+                  drawCMVselector(CMV);
+                }
+                move = 0;
+              }
+              if (previousCMV != CMV) {
+                menu();
+              }
+              break;
+            case 2:
+              while (NOT_PUSHED) {
+                updateData();
+                if (move && -move + PIPpressure >= minPIPpressure && -move + PIPpressure <= maxPIPpressure) {
+                  tft.setTextColor(BLACK);
+                  drawRightNumber(PIPpressure, PIPpressureXPos, ypos);
+                  PIPpressure -= move;
+                  tft.setTextColor(LIGHT_ORANGE);
+                  drawRightNumber(PIPpressure, PIPpressureXPos, ypos);
+                }
+                move = 0;
+              }
+              break;
+            case 3:
+              while (NOT_PUSHED) {
+                updateData();
+                if (move && -move + oscRate >= minOscRate && -move + oscRate <= maxOscRate) {
+                  tft.setTextColor(BLACK);
+                  drawRightNumber(oscRate, oscRateXPos, ypos);
+                  oscRate -= move;
+                  tft.setTextColor(LIGHT_ORANGE);
+                  drawRightNumber(oscRate, oscRateXPos, ypos);
+                }
+                move = 0;
+              }
+              break;
+            case 4:
+              while (NOT_PUSHED) {
+                updateData();
+                if (move && -move + cc >= minCc && -move + cc <= maxCc) {
+                  tft.setTextColor(BLACK);
+                  drawRightNumber(cc, ccXPos, ypos);
+                  cc -= 50 * move;
+                  tft.setTextColor(LIGHT_ORANGE);
+                  drawRightNumber(cc, ccXPos, ypos);
+                }
+                move = 0;
+              }
+              break;
+            case 5:
+              while (NOT_PUSHED) {
+                updateData();
+                if (move && -move + expRatio >= minExpRatio && -move + expRatio <= maxExpRatio) {
+                  tft.setTextColor(BLACK);
+                  drawRightNumber(expRatio, expRatioXPos, ypos);
+                  expRatio -= move;
+                  tft.setTextColor(LIGHT_ORANGE);
+                  drawRightNumber(expRatio, expRatioXPos, ypos);
+                }
+                move = 0;
+              }
+              break;
+            case 6:
+              if (page == 2) {
+                while (NOT_PUSHED) {
+                  updateData();
+                  if (move && -move + PTrigger >= minPTrigger && -move + PTrigger <= maxPTrigger) {
+                    tft.setTextColor(BLACK);
+                    drawRightNumber(PTrigger, PTriggerXPos, ypos);
+                    PTrigger -= move;
+                    tft.setTextColor(LIGHT_ORANGE);
+                    drawRightNumber(PTrigger, PTriggerXPos, ypos);
+                  }
+                  move = 0;
+                }
               }
               else {
-                CMV--;
+                alarmSettings();
               }
-              drawCMVselector(CMV);
-            }
-            move = 0;
-          }
-          if (previousCMV != CMV) {
-            menu();
-          }
-          break;
-        case 2:
-          while (NOT_PUSHED) {
-            updateData();
-            if (move && -move + PIPpressure >= minPIPpressure && -move + PIPpressure <= maxPIPpressure) {
-              tft.setTextColor(BLACK);
-              drawRightNumber(PIPpressure, PIPpressureXPos, ypos);
-              PIPpressure -= move;
-              tft.setTextColor(LIGHT_ORANGE);
-              drawRightNumber(PIPpressure, PIPpressureXPos, ypos);
-            }
-            move = 0;
+              break;
+            case 7:
+              alarmSettings();
+              break;
           }
           break;
         case 3:
-          while (NOT_PUSHED) {
-            updateData();
-            if (move && -move + oscRate >= minOscRate && -move + oscRate <= maxOscRate) {
-              tft.setTextColor(BLACK);
-              drawRightNumber(oscRate, oscRateXPos, ypos);
-              oscRate -= move;
-              tft.setTextColor(LIGHT_ORANGE);
-              drawRightNumber(oscRate, oscRateXPos, ypos);
-            }
-            move = 0;
-          }
-          break;
-        case 4:
-          while (NOT_PUSHED) {
-            updateData();
-            if (move && -move + cc >= minCc && -move + cc <= maxCc) {
-              tft.setTextColor(BLACK);
-              drawRightNumber(cc, ccXPos, ypos);
-              cc -= 50 * move;
-              tft.setTextColor(LIGHT_ORANGE);
-              drawRightNumber(cc, ccXPos, ypos);
-            }
-            move = 0;
-          }
-          break;
-        case 5:
-          while (NOT_PUSHED) {
-            updateData();
-            if (move && -move + expRatio >= minExpRatio && -move + expRatio <= maxExpRatio) {
-              tft.setTextColor(BLACK);
-              drawRightNumber(expRatio, expRatioXPos, ypos);
-              expRatio -= move;
-              tft.setTextColor(LIGHT_ORANGE);
-              drawRightNumber(expRatio, expRatioXPos, ypos);
-            }
-            move = 0;
-          }
-          break;
-        case 6:
-          if (page == 2) {
-            while (NOT_PUSHED) {
-              updateData();
-              if (move && -move + PTrigger >= minPTrigger && -move + PTrigger <= maxPTrigger) {
-                tft.setTextColor(BLACK);
-                drawRightNumber(PTrigger, PTriggerXPos, ypos);
-                PTrigger -= move;
-                tft.setTextColor(LIGHT_ORANGE);
-                drawRightNumber(PTrigger, PTriggerXPos, ypos);
+          switch (bar_pos) {
+            case 1:
+              previousCMV = CMV;
+              while (NOT_PUSHED) {
+                updateData();
+                if (move) {
+                  if (CMV == 1) {
+                    CMV++;
+                  }
+                  else {
+                    CMV--;
+                  }
+                  drawCMVselector(CMV);
+                }
+                move = 0;
               }
-              move = 0;
-            }
+              if (previousCMV != CMV) {
+                menu();
+              }
+              break;
+            case 2:
+              while (NOT_PUSHED) {
+                updateData();
+                if (move && -move + cc >= minCc && -move + cc <= maxCc) {
+                  tft.setTextColor(BLACK);
+                  drawRightNumber(cc, ccXPos, ypos);
+                  cc -= 50 * move;
+                  tft.setTextColor(LIGHT_ORANGE);
+                  drawRightNumber(cc, ccXPos, ypos);
+                }
+                move = 0;
+              }
+              break;
+            case 4:
+              menu();
+              break;
           }
-          else {
-            alarmSettings();
-          }
-          break;
-        case 7:
-          alarmSettings();
           break;
       }
       draw_cursor_unselected();

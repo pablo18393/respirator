@@ -18,7 +18,7 @@ void updateData() {
 }
 
 void checkIdle() {
-  if (page && (millis() - last_something) > graphicWait) {
+  if (page != 3 && page && (millis() - last_something) > graphicWait) {
     graphic();
   }
 }
