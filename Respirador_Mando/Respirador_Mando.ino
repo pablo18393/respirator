@@ -33,15 +33,15 @@
 
 #define PUSHED digitalRead(pulse)
 #define NOT_PUSHED digitalRead(pulse) == 0
-#define SerialBus Serial1
+#define SerialBus Serial
 
 //-------------------//
 
 int graphicWait = 3000;
 byte CMV, previousCMV;
-int PIPpressure = 35, minPIPpressure = 25, maxPIPpressure = 45;
-int oscRate = 15, minOscRate = 8, maxOscRate = 30;
-int cc = 400, minCc = 200, maxCc = 1000;
+int PIPpressure = 35, minPIPpressure = 25, maxPIPpressure = 45, PIPpressureAlarm = PIPpressure;
+int oscRate = 15, minOscRate = 8, maxOscRate = 30, oscRateAlarm = oscRate;
+int cc = 400, minCc = 200, maxCc = 1000, ccAlarm = cc;
 int expRatio = 2, minExpRatio = 1, maxExpRatio = 5;
 int PTrigger = -2, minPTrigger = -5, maxPTrigger = 0;
 

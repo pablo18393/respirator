@@ -7,7 +7,7 @@ void alarmSettings() {
   }
   pos_text[3] = 1;
 
-  words[0]  = "MAX OSC RATE";
+  words[0]  = "MAX RESP";
   words[1] = "MIN VOL";
   words[2] = "MAX PIP";
   words[3] = "OK";

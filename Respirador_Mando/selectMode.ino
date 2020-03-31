@@ -142,37 +142,48 @@ void selectMode() {
           break;
         case 3:
           switch (bar_pos) {
+
             case 1:
-              previousCMV = CMV;
               while (NOT_PUSHED) {
                 updateData();
-                if (move) {
-                  if (CMV == 1) {
-                    CMV++;
-                  }
-                  else {
-                    CMV--;
-                  }
-                  drawCMVselector(CMV);
+                if (move && -move + oscRateAlarm >= minOscRate && -move + oscRateAlarm <= maxOscRate) {
+                  tft.setTextColor(BLACK);
+                  drawRightNumber(oscRateAlarm, oscRateXPos, ypos);
+                  oscRateAlarm -= move;
+                  tft.setTextColor(LIGHT_ORANGE);
+                  drawRightNumber(oscRateAlarm, oscRateXPos, ypos);
                 }
                 move = 0;
               }
-              if (previousCMV != CMV) {
-                menu();
-              }
+              SerialBus.print("O" + String(oscRateAlarm) + ",");
               break;
             case 2:
               while (NOT_PUSHED) {
                 updateData();
-                if (move && -move + cc >= minCc && -move + cc <= maxCc) {
+                if (move && -move + ccAlarm >= minCc && -move + ccAlarm <= maxCc) {
                   tft.setTextColor(BLACK);
-                  drawRightNumber(cc, ccXPos, ypos);
-                  cc -= 50 * move;
+                  drawRightNumber(ccAlarm, ccXPos, ypos);
+                  ccAlarm -= 50 * move;
                   tft.setTextColor(LIGHT_ORANGE);
-                  drawRightNumber(cc, ccXPos, ypos);
+                  drawRightNumber(ccAlarm, ccXPos, ypos);
                 }
                 move = 0;
               }
+              SerialBus.print("C" + String(ccAlarm) + ",");
+              break;
+            case 3:
+              while (NOT_PUSHED) {
+                updateData();
+                if (move && -move + PIPpressureAlarm >= minPIPpressure && -move + PIPpressureAlarm <= maxPIPpressure) {
+                  tft.setTextColor(BLACK);
+                  drawRightNumber(PIPpressureAlarm, PIPpressureXPos, ypos);
+                  PIPpressureAlarm -= move;
+                  tft.setTextColor(LIGHT_ORANGE);
+                  drawRightNumber(PIPpressureAlarm, PIPpressureXPos, ypos);
+                }
+                move = 0;
+              }
+              SerialBus.print("P" + String(PIPpressureAlarm) + ",");
               break;
             case 4:
               menu();

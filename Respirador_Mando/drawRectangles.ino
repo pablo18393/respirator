@@ -108,6 +108,28 @@ void drawRectangles() {
               break;
           }
           break;
+        case 3:
+          switch (i) {
+            case 0:
+              tft.setTextColor(WHITE);
+              tftdrawRightStringWrap("Resp/min", 240, ypos, 2);
+              tft.setTextColor(LIGHT_ORANGE);
+              drawRightNumber(oscRate, oscRateXPos, ypos);
+              break;
+            case 1:
+              tft.setTextColor(WHITE);
+              tftdrawRightStringWrap("cc", 240, ypos, 2);
+              tft.setTextColor(LIGHT_ORANGE);
+              drawRightNumber(cc, ccXPos, ypos);
+              break;
+            case 2:
+              tft.setTextColor(WHITE);
+              tftdrawRightStringWrap("cmH2O", 240, ypos, 2);
+              tft.setTextColor(LIGHT_ORANGE);
+              drawRightNumber(PIPpressure, PIPpressureXPos, ypos);
+              break;
+          }
+          break;
       }
     }
   }
