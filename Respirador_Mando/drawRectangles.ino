@@ -65,8 +65,10 @@ void drawRectangles() {
               break;
             case 4:
               tft.setTextColor(LIGHT_ORANGE);
-              tftdrawRightStringWrap("1/", 220, ypos, 4);
-              drawRightNumber(expRatio, expRatioXPos, ypos);
+              tftdrawRightStringWrap("1/", 200, ypos, 4);
+              tft.setCursor(expRatioXPos, ypos + 16);
+              tft.print(expRatio, 1);
+              //drawRightNumber(expRatio, expRatioXPos, ypos);
               break;
           }
           break;
@@ -97,8 +99,10 @@ void drawRectangles() {
               break;
             case 4:
               tft.setTextColor(LIGHT_ORANGE);
-              tftdrawRightStringWrap("1/", 220, ypos, 4);
-              drawRightNumber(expRatio, expRatioXPos, ypos);
+              tftdrawRightStringWrap("1/", 200, ypos, 4);
+              tft.setCursor(expRatioXPos, ypos + 16);
+              tft.print(expRatio, 1);
+              //drawRightNumber(expRatio, expRatioXPos, ypos);
               break;
             case 5:
               tft.setTextColor(WHITE);

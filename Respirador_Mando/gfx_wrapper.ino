@@ -19,7 +19,7 @@ void drawAxis() {
 void drawPIP() {
   for (int i = 0; i < xAxis; i++) {
     if (stripLineCount >= 0) {
-      tft.drawPixel(i + xOffset, yOffset - 10 * (PIPpressure / scale), WHITE); //because data will come in mmH2O we multiply by 10
+      tft.drawPixel(i + xOffset, yOffset - axisWidth - (10 * PIPpressure) / scale, WHITE); //because data will come in mmH2O we multiply by 10
     }
     stripLineCount++;
     if (stripLineCount == stripLineDensity) {

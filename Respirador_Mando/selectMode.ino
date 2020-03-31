@@ -106,14 +106,17 @@ void selectMode() {
               }
               break;
             case 5:
+              tft.setFont(&FreeSans12pt7b);
               while (NOT_PUSHED) {
                 updateData();
-                if (move && -move + expRatio >= minExpRatio && -move + expRatio <= maxExpRatio) {
+                if (move && float(-move) / 2 + expRatio >= minExpRatio && float(-move) / 2 + expRatio <= maxExpRatio) {
+                  tft.setCursor(expRatioXPos, ypos + 16);
                   tft.setTextColor(BLACK);
-                  drawRightNumber(expRatio, expRatioXPos, ypos);
-                  expRatio -= move;
+                  tft.print(expRatio, 1);
+                  tft.setCursor(expRatioXPos, ypos + 16);
+                  expRatio -= float(move) / 2;
                   tft.setTextColor(LIGHT_ORANGE);
-                  drawRightNumber(expRatio, expRatioXPos, ypos);
+                  tft.print(expRatio, 1);
                 }
                 move = 0;
               }

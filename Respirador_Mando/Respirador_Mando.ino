@@ -42,7 +42,8 @@ byte CMV, previousCMV;
 int PIPpressure = 35, minPIPpressure = 25, maxPIPpressure = 45, PIPpressureAlarm = PIPpressure;
 int oscRate = 15, minOscRate = 8, maxOscRate = 30, oscRateAlarm = oscRate;
 int cc = 400, minCc = 200, maxCc = 1000, ccAlarm = cc;
-int expRatio = 2, minExpRatio = 1, maxExpRatio = 5;
+float expRatio = 2;
+int minExpRatio = 1, maxExpRatio = 5;
 int PTrigger = -2, minPTrigger = -5, maxPTrigger = 0;
 
 //-------------------//
@@ -58,7 +59,7 @@ int stripLineWidth = 1;
 int stripLineDensity = 5, stripLineCount = 0;
 int PIPpressureXPos = 170;
 int oscRateXPos = 155;
-int expRatioXPos = 230;
+int expRatioXPos = 200;
 int ccXPos = 210;
 int PTriggerXPos = 165;
 
@@ -68,7 +69,8 @@ int graphicPos;
 int graphicBuffer[300], inputBuffer[300], graphicBefore[300];
 int newData, Pmax = 0, Pmin = 99, volumeDetected, volumeDetectedBefore, respminDetected, respminDetectedBefore;
 bool CMV_set;
-int PIPpressure_set, oscRate_set, cc_set, expRatio_set, PTrigger_set;
+int PIPpressure_set, oscRate_set, cc_set, PTrigger_set;
+float expRatio_set;
 byte bufferIndex = 0;
 byte Start_capture = 0;
 unsigned long data_generation_ref = 0;
@@ -349,7 +351,7 @@ byte info_slave[max_tramos];
 long long accel_time[max_tramos];
 long long info_distancia[max_tramos][3];
 byte n_tramos = 2;
-char output_msg[70];
+String output_msg;
 byte output_msg_index;
 long timeout;
 int crashed = 0;

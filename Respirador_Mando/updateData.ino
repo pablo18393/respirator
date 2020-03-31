@@ -42,14 +42,21 @@ void updateParam() {
     expRatio_set = expRatio;
     PTrigger_set = abs(PTrigger);
     CMV_set = CMV;
-    output_msg_index = 0;
-    output_msg[ output_msg_index ] = 'P';
+    output_msg = "";
+    output_msg += 'P';
     for ( int i = 0; i < 6; i++ ) {
       output_msg_index++;
-      int2string( param[i] );
+      if (i == 3) {
+        output_msg += String(expRatio_set, 1);
+      }
+      else {
+        output_msg += String(param[i]);
+      }
+      output_msg += ",";
     }
-    output_msg[ ++output_msg_index ] = '|';
-    output_msg[ ++output_msg_index ] = '\0';
+    output_msg += '|';
+    output_msg += '\0';
+    //Serial.print( output_msg );
     Serial1.print( output_msg );
     Serial2.print( output_msg );
   }

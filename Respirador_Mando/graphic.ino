@@ -31,6 +31,7 @@ void graphic() {
         break;
       case 2:
         deleteDrawed();
+        drawPIP();
         break;
       case 3:
         updateVolume();
