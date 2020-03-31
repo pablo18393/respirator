@@ -45,6 +45,7 @@ void selectMode() {
       }
       switch (page) {
         case 1:
+        case 2:
           switch (bar_pos) {
             case 1:
               previousCMV = CMV;
