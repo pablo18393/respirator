@@ -7,11 +7,8 @@ void graphic() {
   SerialX_empty();
   while ((millis() - last_something) > graphicWait) {
     updateData();
-    if (read_pressure()) {
-      if (Start_capture) {
-        deleteDrawed();
-      }
-      else {
+    switch (readDriverInput()) {
+      case 1:
         if (inputBuffer[graphicPos] > (yRes * scale)) {
           inputBuffer[graphicPos] = yRes * scale;
         }
@@ -31,13 +28,39 @@ void graphic() {
             graphicPos++;
           }
         }
-      }
+        break;
+      case 2:
+        deleteDrawed();
+        break;
+      case 3:
+        updateVolume();
+        break;
+      case 4:
+        updateOscRate();
+        break;
     }
   }
   menu();
 }
 
+void updateVolume() {
+  tft.setTextColor(WHITE);
+  drawRightNumber(volumeDetectedBefore, 120, 5 + width_heading); //mm to cm
+  tft.setTextColor(LIGHT_ORANGE);
+  drawRightNumber(volumeDetected, 120, 5 + width_heading); //mm to cm
+  volumeDetectedBefore = volumeDetected;
+}
+
+void updateOscRate() {
+  tft.setTextColor(WHITE);
+  drawRightNumber(respminDetectedBefore, 235, 5 + width_heading); //mm to cm
+  tft.setTextColor(LIGHT_ORANGE);
+  drawRightNumber(respminDetected, 235, 5 + width_heading); //mm to cm
+  respminDetectedBefore = respminDetected;
+}
+
 void deleteDrawed() {
+  drawPeaks();
   assignDrawedBefore();
   for (int i = 0; i < 215; i++) {
     graphicPos = i;
@@ -50,15 +73,15 @@ void drawPeaks() {
   int maxValue = checkMaxPeak();
   int minValue = checkMinPeak();
   tft.setTextColor(WHITE);
-  drawRightNumber(maxData / 10, 100, 5); //mm to cm
-  maxData = maxValue;
+  drawRightNumber(Pmax / 10, 120, 5); //mm to cm
+  Pmax = maxValue;
   tft.setTextColor(LIGHT_ORANGE);
-  drawRightNumber(maxData / 10, 100, 5); //mm to cm
+  drawRightNumber(Pmax / 10, 120, 5); //mm to cm
   tft.setTextColor(WHITE);
-  drawRightNumber(minData / 10, 215, 5); //mm to cm
-  minData = minValue;
+  drawRightNumber(Pmin / 10, 235, 5); //mm to cm
+  Pmin = minValue;
   tft.setTextColor(LIGHT_ORANGE);
-  drawRightNumber(minData / 10, 215, 5); //mm to cm
+  drawRightNumber(Pmin / 10, 235, 5); //mm to cm
 }
 
 void assignDrawedBefore() {
@@ -99,7 +122,7 @@ void resetValues() {
 
 int checkMaxPeak() {
   int maxValue;
-  for (int i = 0; i < 215; i++) {
+  for (int i = 0; i < graphicPos; i++) {
     maxValue = max(maxValue, graphicBuffer[i]);
   }
   return maxValue;
@@ -107,7 +130,7 @@ int checkMaxPeak() {
 
 int checkMinPeak() {
   int minValue = 999;
-  for (int i = 0; i < 215; i++) {
+  for (int i = 0; i < graphicPos; i++) {
     minValue = min(minValue, graphicBuffer[i]);
   }
   return minValue;

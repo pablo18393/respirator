@@ -66,7 +66,7 @@ int PTriggerXPos = 165;
 
 int graphicPos;
 int graphicBuffer[300], inputBuffer[300], graphicBefore[300];
-int newData, maxData = 0, minData = 99;
+int newData, Pmax = 0, Pmin = 99, volumeDetected, volumeDetectedBefore, respminDetected, respminDetectedBefore;
 bool CMV_set;
 int PIPpressure_set, oscRate_set, cc_set, expRatio_set, PTrigger_set;
 byte bufferIndex = 0;
@@ -75,6 +75,10 @@ unsigned long data_generation_ref = 0;
 int graph_index = 0;
 float angle;
 byte start_confirmed = 0;
+int serialDataRecieved;
+byte variableRead = 1;
+
+
 
 //-------------------//
 

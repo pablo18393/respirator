@@ -183,7 +183,7 @@ void selectMode() {
                 }
                 move = 0;
               }
-              SerialBus.print("P" + String(PIPpressureAlarm) + ",");
+              SerialBus.print("A" + String(PIPpressureAlarm) + ",");
               break;
             case 4:
               menu();

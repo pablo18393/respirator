@@ -56,32 +56,68 @@ void updateParam() {
 
 }
 
-bool read_pressure() {
+byte readDriverInput() {
   bool dataToPrint = 0;
-  if (SerialX_peek() == 'X') {
-    SerialX_read();
-    Start_capture = 1;
-  }
-  else if ( SerialX_peek() > 47 && SerialX_peek() < 58 ) {
-    inputBuffer[ graph_index ] *= 10;
-    inputBuffer[ graph_index ] += SerialX_read() - 48;
-  }
-  else if ( SerialX_peek() == ',' ) {
-    SerialX_read();
-    Serial2.println(inputBuffer[ graph_index ]);
-    if ( graph_index >= graphicX - 1) {
-      graph_index = 0;
+  byte variableReadRetainer;
+  if (SerialX_available()) {
+    switch (SerialX_peek()) {
+      case 'X':
+        SerialX_read();
+        Start_capture = 1;
+        variableRead = 2;
+        dataToPrint = 1;
+        break;
+      case 'V':
+        SerialX_read();
+        variableRead = 3;
+        break;
+      case 'F':
+        SerialX_read();
+        variableRead = 4;
+        break;
+      case ',':
+        SerialX_read();
+        switch (variableRead) {
+          case 1:
+            inputBuffer[ graph_index ] = serialDataRecieved;
+            Serial2.println(inputBuffer[ graph_index ]);
+            if ( graph_index >= graphicX - 1) {
+              graph_index = 0;
+            }
+            else {
+              graph_index++;
+              inputBuffer[ graph_index ] = 0;
+            }
+            break;
+          case 3:
+            volumeDetected = serialDataRecieved;
+            break;
+          case 4:
+            respminDetected = serialDataRecieved;
+            break;
+        }
+        serialDataRecieved = 0;
+        dataToPrint = 1;
+        break;
+      default:
+        if ( SerialX_peek() > 47 && SerialX_peek() < 58 ) {
+          serialDataRecieved *= 10;
+          serialDataRecieved += SerialX_read() - 48;
+        }
+        else {
+          SerialX_read();
+        }
+        break;
+    }
+    if (dataToPrint) {
+      variableReadRetainer = variableRead;
+      variableRead = 1;
+      return variableReadRetainer;
     }
     else {
-      graph_index++;
-      inputBuffer[ graph_index ] = 0;
+      return false;
     }
-    dataToPrint = 1;
   }
-  else {
-    SerialX_read();
-  }
-  return dataToPrint;
 }
 
 long buffer2string() {
