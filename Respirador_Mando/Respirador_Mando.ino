@@ -79,7 +79,21 @@ float angle;
 byte start_confirmed = 0;
 int serialDataRecieved;
 byte variableRead = 1;
+byte alarmRead;
 
+
+
+//-------------------//
+#define OscRateAlarm 1
+#define CCalarm 2
+#define OverloadAlarm 3
+#define PowerSupplyAlarm 4
+#define AbnormalPressureAlarm 5
+#define PressureAlarm 6
+long lastDisclaimerBlink;
+bool blinkState;
+char* alarmText[3];
+bool displayNumber = 0;
 
 
 //-------------------//

@@ -15,10 +15,11 @@ void updateData() {
   oldPosition = newPosition;
   checkIdle();
   updateParam();
+  readAlarms();
 }
 
 void checkIdle() {
-  if (!selected && page != 3 && page && (millis() - last_something) > graphicWait) {
+  if (!selected && page && page != 3 && page != 4 && page != 5 && (millis() - last_something) > graphicWait) {
     graphic();
   }
 }
@@ -47,7 +48,7 @@ void updateParam() {
     for ( int i = 0; i < 6; i++ ) {
       output_msg_index++;
       if (i == 3) {
-        output_msg += String(expRatio_set, 1);
+        output_msg += String(param[i] * 10);
       }
       else {
         output_msg += String(param[i]);
@@ -63,70 +64,126 @@ void updateParam() {
 
 }
 
+byte readAlarms() {
+  int serialDataRetainer;
+  int alarmReadRetainer;
+  if (SerialX_available()) {
+    switch (SerialX_peek()) {
+      case 'S':
+        SerialX_read();
+        alarmRead = OverloadAlarm;
+        break;
+      case 'Z':
+        SerialX_read();
+        alarmRead = PowerSupplyAlarm;
+        break;
+      case 'Y':
+        SerialX_read();
+        alarmRead = AbnormalPressureAlarm;
+        break;
+      case 'A':
+        SerialX_read();
+        alarmRead = PressureAlarm;
+        break;
+      case 'O':
+        SerialX_read();
+        alarmRead = OscRateAlarm;
+        break;
+      case 'C':
+        SerialX_read();
+        alarmRead = CCalarm;
+        break;
+      case ',':
+        if (alarmRead) {
+          SerialX_read();
+          serialDataRetainer = serialDataRecieved;
+          serialDataRecieved = 0;
+          alarmReadRetainer = alarmRead;
+          alarmRead = 0;
+          alarm(alarmReadRetainer, serialDataRetainer);
+        }
+        break;
+      default:
+        if (alarmRead) {
+          if ( SerialX_peek() > 47 && SerialX_peek() < 58 ) {
+            serialDataRecieved *= 10;
+            serialDataRecieved += SerialX_read() - 48;
+          }
+          else {
+            SerialX_read();
+          }
+          break;
+        }
+    }
+  }
+  return alarmRead;
+}
+
 byte readDriverInput() {
   bool dataToPrint = 0;
   byte variableReadRetainer;
-  if (SerialX_available()) {
-    switch (SerialX_peek()) {
-      case 'X':
-        SerialX_read();
-        Start_capture = 1;
-        variableRead = 2;
-        dataToPrint = 1;
-        break;
-      case 'V':
-        SerialX_read();
-        variableRead = 3;
-        break;
-      case 'F':
-        SerialX_read();
-        variableRead = 4;
-        break;
-      case ',':
-        SerialX_read();
-        switch (variableRead) {
-          case 1:
-            inputBuffer[ graph_index ] = serialDataRecieved;
-            Serial2.println(inputBuffer[ graph_index ]);
-            if ( graph_index >= graphicX - 1) {
-              graph_index = 0;
-            }
-            else {
-              graph_index++;
-              inputBuffer[ graph_index ] = 0;
-            }
-            break;
-          case 3:
-            volumeDetected = serialDataRecieved;
-            break;
-          case 4:
-            respminDetected = serialDataRecieved;
-            break;
-        }
-        serialDataRecieved = 0;
-        dataToPrint = 1;
-        break;
-      default:
-        if ( SerialX_peek() > 47 && SerialX_peek() < 58 ) {
-          serialDataRecieved *= 10;
-          serialDataRecieved += SerialX_read() - 48;
-        }
-        else {
+  if (!readAlarms()) {
+    if (SerialX_available()) {
+      switch (SerialX_peek()) {
+        case 'X':
           SerialX_read();
-        }
-        break;
-    }
-    if (dataToPrint) {
-      variableReadRetainer = variableRead;
-      variableRead = 1;
-      return variableReadRetainer;
-    }
-    else {
-      return false;
+          Start_capture = 1;
+          variableRead = 2;
+          dataToPrint = 1;
+          break;
+        case 'V':
+          SerialX_read();
+          variableRead = 3;
+          break;
+        case 'F':
+          SerialX_read();
+          variableRead = 4;
+          break;
+        case ',':
+          SerialX_read();
+          switch (variableRead) {
+            case 1:
+              inputBuffer[ graph_index ] = serialDataRecieved;
+              Serial2.println(inputBuffer[ graph_index ]);
+              if ( graph_index >= graphicX - 1) {
+                graph_index = 0;
+              }
+              else {
+                graph_index++;
+                inputBuffer[ graph_index ] = 0;
+              }
+              break;
+            case 3:
+              volumeDetected = serialDataRecieved;
+              break;
+            case 4:
+              respminDetected = serialDataRecieved;
+              break;
+          }
+          serialDataRecieved = 0;
+          dataToPrint = 1;
+          break;
+        default:
+          if ( SerialX_peek() > 47 && SerialX_peek() < 58 ) {
+            serialDataRecieved *= 10;
+            serialDataRecieved += SerialX_read() - 48;
+          }
+          else {
+            SerialX_read();
+          }
+          break;
+      }
+      if (dataToPrint) {
+        variableReadRetainer = variableRead;
+        variableRead = 1;
+        return variableReadRetainer;
+      }
+      else {
+        return false;
+      }
     }
   }
 }
-
 long buffer2string() {
   long data = 0;
   bool sign = 0;

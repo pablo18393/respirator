@@ -1,7 +1,7 @@
 void graphic() {
   int maxValue, minValue;
   graphicPos = 0;
-  page = 0;
+  page = 4;
   drawAxis();
   resetValues();
   SerialX_empty();
